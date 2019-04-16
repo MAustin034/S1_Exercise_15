@@ -75,7 +75,7 @@ function calcOrder() {
       //store the order details
       orderForm.elements.modelName.value = orderForm.elements.model.options[mIndex].text;
 
-      orderForm.elements.protectionName.value = document.querySelectorAll('input[name="protection"]:checked')
+      orderForm.elements.protectionName.value = document.querySelector('input[name="protection"]:checked').nextSibling.nodeValue;
 
 }
 
