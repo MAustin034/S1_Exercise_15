@@ -74,7 +74,7 @@ function runSubmit() {
       validateName();
       validateCredit();
       validateNumber();
-      validatMonth();
+      validateMonth();
       validateYear();
       validateCVC();
 }
@@ -99,20 +99,20 @@ function validateCVC() {
 }
 
 function validateMonth() {
-      var creditMonth = document.getElementById("expMonth");
+      var cardMonth = document.getElementById("expMonth");
       if (cardMonth.selectedIndex === 0) {
             cardMonth.setCustomValidity("Select the expiration month")
       } else {
-            creditMonth.setCustomValidity("");
+            cardMonth.setCustomValidity("");
       }
 }
 
 function validateYear() {
-      var creditYear = document.getElementById("expYear");
+      var cardYear = document.getElementById("expYear");
       if (cardYear.selectedIndex === 0) {
             cardYear.setCustomValidity("Select the expiration year")
       } else {
-            creditYear.setCustomValidity("");
+            cardYear.setCustomValidity("");
       }
 }
 
@@ -122,6 +122,8 @@ function validateNumber() {
             cardNumber.setCustomValidity("Enter your card number");
       } else if (cardNumber.validity.patternMismatch) {
             cardNumber.setCustomValidity("Enter a valid card number");
+      } else if (luhn(cardNumber.value) === false) {
+            cardNumber.setCustomValidity("Enter a legitimate card number");
       } else {
             cardNumber.setCustomValidity("");
       }
@@ -154,10 +156,17 @@ function sumDigits(numStr) {
 }
 
 function luhn(idNum) {
+      var string1 = "";
+      var string2 = ""; //retrieve the odd numbered digits
+      for (var i = idNum.length - 1; i >= 0; i -= 2) {
+            string1 += idNum.charAt(i);
 
-      //retrieve the odd numbered digits
-
+      }
       //retreive the even numbered digits
+      for (var i = idNum.length - 2; i >= 0; i -= 2) {
+            string2 += 2 * idNum.charAt(i);
 
+      }
       //return wheathwr the dum of the difits os divisable by 10
+      return sumDigits(string1 + string2) % 10 === 0;
 }
